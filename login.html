@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>login</title>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+		
+		$(window).on('load', function() {			
+			
+			var id = 'idUsuario';
+ 
+            $('#botonEnviar').click(function(event) {				
+ 
+                event.preventDefault();
+ 
+                var request = $.ajax({
+					method : 'POST',
+                    url    : 'login.php',                    
+                    data   : {
+                        keystrokes : id
+                    },
+                    dataType    : 'json'
+                });
+ 
+                request.done(function(response) { 
+                    if(response.status) {
+                        alert('Success: ' + response.result + "\n Message: " + response.message);
+                        window.location.href = 'login.php';
+                    }
+                    else {
+                        alert('Error: ' + response.message);
+                        window.location.href = window.location.href;
+                    }
+                });
+ 
+                request.fail(function(jqXHR, textStatus) {
+                    alert("Server request failed: " + textStatus);
+                    window.location.href = '';
+                });
+            });
+			
+		});
+ 
+            
+        </script>
+    </head>
+    <body>
+        <form id="formulario">
+            <p><input type="text "id="clickme"  placeholder="n o m b r e"></p>
+            <p><input type="text "id="pass"  placeholder=" c o n t r a s e n a"></p>
+            <input type="button" id="botonEnviar" value="enviar">
+        </form>
+    </body>
+</html>
